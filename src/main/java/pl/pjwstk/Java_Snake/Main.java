@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
 public class Main extends Application {
     // variable
     static Random rand = new Random();
-    static float difficulty = 0.5F;
+    static float difficulty = 1;
     static float speed = 5*difficulty;
     static int foodcolor = 0;
     static int foodcolor2 = 0;
@@ -33,7 +33,6 @@ public class Main extends Application {
     static List<Corner> snake = new ArrayList<>();
     static Dir direction = Dir.left;
     static boolean gameOver = false;
-    static int s_long = 3;
 
     public enum Dir {
         left, right, up, down
@@ -87,14 +86,17 @@ public class Main extends Application {
                     snake.get(0).x = 10;
                     snake.get(0).y = 10;
                     gameOver = false;
-                    for (int i = 2; i<=s_long; i++){
-                        snake.remove(1);
+                    if(snake.size() > 3){
+                        //for (int i = 0; i<snake.size(); i++){
+                        //    snake.remove(snake.size()-1);
+                        //}
+                        do{
+                            snake.remove(snake.size()-1);
+                            speed-=difficulty;
+                        }
+                        while(speed>5*difficulty+difficulty);
                     }
-                    speed = 5*difficulty+difficulty;
-                    s_long = 3;
                     direction = Dir.left;
-                    snake.add(new Corner(width / 2, height / 2));
-                    snake.add(new Corner(width / 2, height / 2));
                     primaryStage.close();
                     primaryStage.setScene(scene);
                     primaryStage.show();
@@ -168,7 +170,7 @@ public class Main extends Application {
 
         // fill
         // background
-        gc.setFill(Color.BLACK);
+        gc.setFill(Color.web("#9ac503"));
         gc.fillRect(0, 0, width * cornersize, height * cornersize);
 
         // score
@@ -234,7 +236,6 @@ public class Main extends Application {
                 //speed-=5;
             }
             snake.add(new Corner(-1, -1));
-            s_long++;
             Food();
         }
         if (foodX2 == snake.get(0).x && foodY2 == snake.get(0).y) {
@@ -264,9 +265,9 @@ public class Main extends Application {
 
         // snake
         for (Corner c : snake) {
-            gc.setFill(Color.LIGHTGREEN);
+            gc.setFill(Color.BLACK);
             gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize - 1, cornersize - 1);
-            gc.setFill(Color.GREEN);
+            gc.setFill(Color.DARKGREEN);
             gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize - 2, cornersize - 2);
 
         }
