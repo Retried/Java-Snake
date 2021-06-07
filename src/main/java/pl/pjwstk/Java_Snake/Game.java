@@ -3,9 +3,10 @@ package pl.pjwstk.Java_Snake;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -16,20 +17,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class Main extends Application {
-    // variable
+public class Game extends Application {
+
     static Random rand = new Random();
-    static float difficulty = 1;
-    static float speed = 5*difficulty;
+    static float difficulty;
+    static float speed;
     static int foodcolor = 0;
     static int foodcolor2 = 0;
-    static int width = 20;
+    static int width = 40;
     static int height = 20;
     static int foodX = 0;
     static int foodY = 0;
     static int foodX2 = 0;
     static int foodY2 = 0;
-    static int cornersize = 25;
+    static int cornersize = 30;
     static List<Corner> snake = new ArrayList<>();
     static Dir direction = Dir.left;
     static boolean gameOver = false;
@@ -38,14 +39,19 @@ public class Main extends Application {
         left, right, up, down
     }
 
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         try {
+            speed = 5*difficulty;
             Food();
 
-            VBox root = new VBox();
+            VBox vbox = new VBox();
+            HBox root2 = new HBox(vbox);
+            root2.setAlignment(Pos.CENTER);
             Canvas c = new Canvas(width * cornersize, height * cornersize);
+            Canvas x = new Canvas(width * cornersize, 50);
             GraphicsContext gc = c.getGraphicsContext2D();
-            root.getChildren().add(c);
+            GraphicsContext text = x.getGraphicsContext2D();
+            vbox.getChildren().addAll(x,c);
 
             new AnimationTimer() {
                 long lastTick = 0;
@@ -53,22 +59,23 @@ public class Main extends Application {
                 public void handle(long now) {
                     if (lastTick == 0) {
                         lastTick = now;
-                        tick(gc);
+                        tick(gc,text);
                         return;
                     }
 
-                    if (now - lastTick > 1000000000 / (speed)) {
+                    if (now - lastTick > 1000000000 / (speed/1.5F)) {
                         lastTick = now;
-                        tick(gc);
+                        tick(gc,text);
                     }
                 }
 
             }.start();
 
-            Scene scene = new Scene(root, width * cornersize, height * cornersize);
+            Scene scene2 = new Scene(root2, 1280, 720);
+            scene2.setFill(Color.LIGHTGRAY);
 
             // control
-            scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
+            scene2.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
                 if (key.getCode() == KeyCode.W || key.getCode() == KeyCode.UP && direction != Dir.down) {
                     direction = Dir.up;
                 }
@@ -83,13 +90,10 @@ public class Main extends Application {
                 }
                 if (key.getCode() == KeyCode.R) {
                     newFood();
-                    snake.get(0).x = 10;
+                    snake.get(0).x = 20;
                     snake.get(0).y = 10;
                     gameOver = false;
                     if(snake.size() > 3){
-                        //for (int i = 0; i<snake.size(); i++){
-                        //    snake.remove(snake.size()-1);
-                        //}
                         do{
                             snake.remove(snake.size()-1);
                             speed-=difficulty;
@@ -97,9 +101,6 @@ public class Main extends Application {
                         while(speed>5*difficulty+difficulty);
                     }
                     direction = Dir.left;
-                    primaryStage.close();
-                    primaryStage.setScene(scene);
-                    primaryStage.show();
                 }
 
             });
@@ -108,9 +109,9 @@ public class Main extends Application {
             snake.add(new Corner(width / 2, height / 2));
             snake.add(new Corner(width / 2, height / 2));
             snake.add(new Corner(width / 2, height / 2));
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("SNAKE GAME");
-            primaryStage.show();
+            stage.setScene(scene2);
+            stage.setTitle("SNAKE GAME");
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,12 +119,12 @@ public class Main extends Application {
     }
 
     // tick
-    public static void tick(GraphicsContext gc) {
+    public static void tick(GraphicsContext gc, GraphicsContext x) {
         if (gameOver) {
             gc.setFill(Color.RED);
             gc.setFont(new Font("", 50));
-            gc.fillText("GAME OVER", 125, 250);
-            gc.fillText("Press R to RESET", 75, 300);
+            gc.fillText("GAME OVER", 475, 300);
+            gc.fillText("Press R to RESET", 425, 350);
             return;
         }
 
@@ -172,12 +173,14 @@ public class Main extends Application {
         // background
         gc.setFill(Color.web("#9ac503"));
         gc.fillRect(0, 0, width * cornersize, height * cornersize);
+        x.setFill(Color.LIGHTGRAY);
+        x.fillRect(0, 0, width * cornersize, height * cornersize);
 
         // score
-        gc.setFill(Color.WHITE);
-        gc.setFont(new Font("", 30));
-        gc.fillText("Score: " + ((speed - (6*difficulty))), 10, 30);
-        gc.fillText((speed)+" :Speed", 350, 30);
+        x.setFill(Color.BLACK);
+        x.setFont(new Font("", 30));
+        x.fillText("Score: " + 10*Math.round(speed - (6*difficulty)), 0, 30);
+        x.fillText(10*Math.round(speed)+" :Speed", 1084-((int)(Math.log10(speed)+1)*16), 30);
 
         // random foodcolor
         Color cc = Color.WHITE;
@@ -220,7 +223,7 @@ public class Main extends Application {
 
         // eat food
         if (foodX == snake.get(0).x && foodY == snake.get(0).y) {
-            if(cc == Color.PURPLE){
+            /*if(cc == Color.PURPLE){
                 //speed-=5;
             }
             else if(cc == Color.LIGHTBLUE){
@@ -234,12 +237,12 @@ public class Main extends Application {
             }
             if(cc == Color.ORANGE){
                 //speed-=5;
-            }
+            }*/
             snake.add(new Corner(-1, -1));
             Food();
         }
         if (foodX2 == snake.get(0).x && foodY2 == snake.get(0).y) {
-            if(cc2 == Color.PURPLE){
+            /*if(cc2 == Color.PURPLE){
                 //speed-=5;
             }
             else if(cc2 == Color.LIGHTBLUE){
@@ -253,7 +256,7 @@ public class Main extends Application {
             }
             if(cc2 == Color.ORANGE){
                 //speed-=5;
-            }
+            }*/
             snake.add(new Corner(-1, -1));
             Food();
         }
@@ -266,9 +269,9 @@ public class Main extends Application {
         // snake
         for (Corner c : snake) {
             gc.setFill(Color.BLACK);
-            gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize - 1, cornersize - 1);
+            gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize, cornersize );
             gc.setFill(Color.DARKGREEN);
-            gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize - 2, cornersize - 2);
+            gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize - 1, cornersize - 1);
 
         }
 
@@ -302,9 +305,5 @@ public class Main extends Application {
             break;
 
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
