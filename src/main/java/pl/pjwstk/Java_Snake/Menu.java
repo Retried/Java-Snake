@@ -10,7 +10,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.Objects;
-import pl.pjwstk.Java_Snake.Game;
 
 
 public class Menu extends Application {
@@ -38,42 +37,33 @@ public class Menu extends Application {
 
         Game c = new Game();
 
-        HBox box2 = new HBox(10,
+        HBox difficulty = new HBox(10,
                 new MenuItem("EASY", () -> {
                     Game.difficulty = 0.5F;
-                    stage.close();
                     c.start(stage);
                 } ),
                 new MenuItem("NORMAL",() -> {
                     Game.difficulty = 1;
-                    stage.close();
                     c.start(stage);
                 }),
                 new MenuItem("HARD", () -> {
                     Game.difficulty = 2;
-                    stage.close();
                     c.start(stage);
                 })
         );
 
-        HBox box = new HBox(10,
-                new MenuItem("PLAY", () -> {
-                    root.getChildren().addAll(
-                            new ImageView(bgImage2),
-                            box2
-                    );
-                } ),
-                new MenuItem("FRUIT INFO",() -> {}),
+        HBox box = new HBox(100,
+                new MenuItem("PLAY", () -> root.getChildren().addAll(
+                        new ImageView(bgImage2),
+                        difficulty
+                )),
                 new MenuItem("EXIT", Platform::exit)
         );
 
-        box.setBackground(new Background(
-                new BackgroundFill(Color.web("black",0.6),null, null)
-        ));
-        box.setTranslateX(250);
+        box.setTranslateX(325);
         box.setTranslateY(600);
-        box2.setTranslateX(250);
-        box2.setTranslateY(300);
+        difficulty.setTranslateX(250);
+        difficulty.setTranslateY(300);
 
         root.getChildren().addAll(
                 new ImageView(bgImage),
