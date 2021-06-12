@@ -84,6 +84,10 @@ public class Game extends Application {
 
             });
 
+            /*for (int i = 0; i<width; i++){
+                for(int j = 0; j<height; j++)
+                    snake.add(new Corner(width / 2, height / 2));
+            }*/
             snake.add(new Corner(width / 2, height / 2));
             snake.add(new Corner(width / 2, height / 2));
             snake.add(new Corner(width / 2, height / 2));

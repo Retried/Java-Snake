@@ -8,10 +8,7 @@ public class Reset {
         Tick.bonus = 0;
         Tick.gameOver = false;
 
-        do{
-            Game.snake.remove(Game.snake.size()-1);
-        }
-        while(Game.snake.size()>0);
+        Game.snake.clear();
 
         do{
             Game.snake.add(new Corner(Game.width / 2, Game.height / 2));

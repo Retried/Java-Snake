@@ -79,40 +79,6 @@ public class Tick {
         Color cc = Color.WHITE;
         Color cc2 = Color.WHITE;
 
-        switch (Food.foodcolor) {
-            case 0:
-                cc = Color.RED;
-                break;
-            case 1:
-                cc = Color.BLUE;
-                break;
-            case 2:
-                cc = Color.GOLD;
-                break;
-            case 3:
-                cc = Color.BLACK;
-                break;
-            case 4:
-                cc = Color.PURPLE;
-                break;
-        }
-        switch (Food.foodcolor2) {
-            case 0:
-                cc2 = Color.RED;
-                break;
-            case 1:
-                cc2 = Color.BLUE;
-                break;
-            case 2:
-                cc2 = Color.GOLD;
-                break;
-            case 3:
-                cc2 = Color.BLACK;
-                break;
-            case 4:
-                cc2 = Color.PURPLE;
-                break;
-        }
 
         if (Food.foodX == Game.snake.get(0).x && Food.foodY == Game.snake.get(0).y || Food.foodX2 == Game.snake.get(0).x && Food.foodY2 == Game.snake.get(0).y){
             Color x;
@@ -155,6 +121,41 @@ public class Tick {
             Food.genFood();
         }
 
+        switch (Food.foodcolor) {
+            case 0:
+                cc = Color.RED;
+                break;
+            case 1:
+                cc = Color.BLUE;
+                break;
+            case 2:
+                cc = Color.GOLD;
+                break;
+            case 3:
+                cc = Color.BLACK;
+                break;
+            case 4:
+                cc = Color.PURPLE;
+                break;
+        }
+        switch (Food.foodcolor2) {
+            case 0:
+                cc2 = Color.RED;
+                break;
+            case 1:
+                cc2 = Color.BLUE;
+                break;
+            case 2:
+                cc2 = Color.GOLD;
+                break;
+            case 3:
+                cc2 = Color.BLACK;
+                break;
+            case 4:
+                cc2 = Color.PURPLE;
+                break;
+        }
+
         gc.setFill(Color.BLACK);
         gc.fillOval(Food.foodX * Game.cornersize, Food.foodY * Game.cornersize, Game.cornersize, Game.cornersize);
         gc.setFill(cc);
@@ -165,11 +166,18 @@ public class Tick {
         gc.setFill(cc2);
         gc.fillOval((Food.foodX2 * Game.cornersize)+1, (Food.foodY2 * Game.cornersize)+1, Game.cornersize-2, Game.cornersize-2);
 
-        for (Corner c : Game.snake) {
+        for (int i = 0; i < Game.snake.size(); i++) {
             gc.setFill(Color.BLACK);
-            gc.fillRect(c.x * Game.cornersize, c.y * Game.cornersize, Game.cornersize, Game.cornersize);
-            gc.setFill(Color.DARKGREEN);
-            gc.fillRect(c.x * Game.cornersize, c.y * Game.cornersize, Game.cornersize - 1, Game.cornersize - 1);
+            if (i==0){
+                gc.fillRoundRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize, Game.cornersize,10,10);
+                gc.setFill(Color.DARKGREEN);
+                gc.fillRoundRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize - 1, Game.cornersize - 1,10,10);
+            }
+            else {
+                gc.fillRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize, Game.cornersize);
+                gc.setFill(Color.GREEN);
+                gc.fillRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize - 1, Game.cornersize - 1);
+            }
         }
     }
 }
