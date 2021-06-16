@@ -6,6 +6,8 @@ import javafx.scene.text.Font;
 
 public class Tick {
 
+    public static Color cc;
+    public static Color cc2;
     static boolean gameOver = false;
     static boolean win = false;
     static int bonus = 0;
@@ -76,9 +78,7 @@ public class Tick {
         text.fillText("Score: " + 10*Math.round(Game.speed - (6*Game.difficulty) + (bonus*Game.difficulty)), 0, 30);
         text.fillText(10*Math.round(Game.speed)+" :Speed", 1084-((int)(Math.log10(Game.speed)+1)*16), 30);
 
-        Color cc = Color.WHITE;
-        Color cc2 = Color.WHITE;
-
+        Switch.main();
 
         if (Food.foodX == Game.snake.get(0).x && Food.foodY == Game.snake.get(0).y || Food.foodX2 == Game.snake.get(0).x && Food.foodY2 == Game.snake.get(0).y){
             Color x;
@@ -121,40 +121,7 @@ public class Tick {
             Food.genFood();
         }
 
-        switch (Food.foodcolor) {
-            case 0:
-                cc = Color.RED;
-                break;
-            case 1:
-                cc = Color.BLUE;
-                break;
-            case 2:
-                cc = Color.GOLD;
-                break;
-            case 3:
-                cc = Color.BLACK;
-                break;
-            case 4:
-                cc = Color.PURPLE;
-                break;
-        }
-        switch (Food.foodcolor2) {
-            case 0:
-                cc2 = Color.RED;
-                break;
-            case 1:
-                cc2 = Color.BLUE;
-                break;
-            case 2:
-                cc2 = Color.GOLD;
-                break;
-            case 3:
-                cc2 = Color.BLACK;
-                break;
-            case 4:
-                cc2 = Color.PURPLE;
-                break;
-        }
+        Switch.main();
 
         gc.setFill(Color.BLACK);
         gc.fillOval(Food.foodX * Game.cornersize, Food.foodY * Game.cornersize, Game.cornersize, Game.cornersize);

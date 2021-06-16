@@ -38,11 +38,11 @@ public class Game extends Application {
             VBox vbox = new VBox();
             HBox root2 = new HBox(vbox);
             root2.setAlignment(Pos.CENTER);
-            Canvas c = new Canvas(width * cornersize, height * cornersize);
-            Canvas x = new Canvas(width * cornersize, 50);
-            GraphicsContext gc = c.getGraphicsContext2D();
-            GraphicsContext text = x.getGraphicsContext2D();
-            vbox.getChildren().addAll(x,c);
+            Canvas x = new Canvas(width * cornersize, height * cornersize);
+            Canvas y = new Canvas(width * cornersize, 50);
+            GraphicsContext gc = x.getGraphicsContext2D();
+            GraphicsContext text = y.getGraphicsContext2D();
+            vbox.getChildren().addAll(y,x);
 
             new AnimationTimer() {
                 long lastTick = 0;
