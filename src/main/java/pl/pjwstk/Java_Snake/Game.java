@@ -21,7 +21,7 @@ public class Game extends Application {
     static float speed;
     static int width = 40;
     static int height = 20;
-    static int cornersize = 30;
+    static int blocksize = 30;
     static List<Corner> snake = new ArrayList<>();
     static Dir direction = Dir.left;
     static int size = 0;
@@ -38,9 +38,9 @@ public class Game extends Application {
             VBox vbox = new VBox();
             HBox root2 = new HBox(vbox);
             root2.setAlignment(Pos.CENTER);
-            Canvas x = new Canvas(width * cornersize, height * cornersize);
-            Canvas y = new Canvas(width * cornersize, 50);
-            GraphicsContext gc = x.getGraphicsContext2D();
+            Canvas x = new Canvas(width * blocksize, height * blocksize);
+            Canvas y = new Canvas(width * blocksize, 50);
+            GraphicsContext field = x.getGraphicsContext2D();
             GraphicsContext text = y.getGraphicsContext2D();
             vbox.getChildren().addAll(y,x);
 
@@ -50,13 +50,13 @@ public class Game extends Application {
                 public void handle(long now) {
                     if (lastTick == 0) {
                         lastTick = now;
-                        Tick.tick(gc,text);
+                        Tick.tick(field,text);
                         return;
                     }
 
                     if (now - lastTick > 1000000000 / (5*difficulty)+(speed*0.1F)) {
                         lastTick = now;
-                        Tick.tick(gc,text);
+                        Tick.tick(field,text);
                     }
                 }
 
@@ -84,10 +84,6 @@ public class Game extends Application {
 
             });
 
-            /*for (int i = 0; i<width; i++){
-                for(int j = 0; j<height; j++)
-                    snake.add(new Corner(width / 2, height / 2));
-            }*/
             snake.add(new Corner(width / 2, height / 2));
             snake.add(new Corner(width / 2, height / 2));
             snake.add(new Corner(width / 2, height / 2));

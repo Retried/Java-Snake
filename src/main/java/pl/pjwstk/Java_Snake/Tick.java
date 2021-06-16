@@ -12,19 +12,19 @@ public class Tick {
     static boolean win = false;
     static int bonus = 0;
 
-    public static void tick(GraphicsContext gc, GraphicsContext text) {
+    public static void tick(GraphicsContext field, GraphicsContext text) {
         if (win) {
-            gc.setFill(Color.RED);
-            gc.setFont(new Font("", 50));
-            gc.fillText("You won!", 475, 300);
-            gc.fillText("Press R to RESET", 425, 350);
+            field.setFill(Color.RED);
+            field.setFont(new Font("", 50));
+            field.fillText("You won!", 475, 300);
+            field.fillText("Press R to RESET", 425, 350);
             return;
         }
         else if (gameOver) {
-            gc.setFill(Color.RED);
-            gc.setFont(new Font("", 50));
-            gc.fillText("GAME OVER", 475, 300);
-            gc.fillText("Press R to RESET", 425, 350);
+            field.setFill(Color.RED);
+            field.setFont(new Font("", 50));
+            field.fillText("GAME OVER", 475, 300);
+            field.fillText("Press R to RESET", 425, 350);
             return;
         }
 
@@ -68,10 +68,10 @@ public class Tick {
             }
         }
 
-        gc.setFill(Color.web("#9ac503"));
-        gc.fillRect(0, 0, Game.width * Game.cornersize, Game.height * Game.cornersize);
+        field.setFill(Color.web("#9ac503"));
+        field.fillRect(0, 0, Game.width * Game.blocksize, Game.height * Game.blocksize);
         text.setFill(Color.LIGHTGRAY);
-        text.fillRect(0, 0, Game.width * Game.cornersize, Game.height * Game.cornersize);
+        text.fillRect(0, 0, Game.width * Game.blocksize, Game.height * Game.blocksize);
 
         text.setFill(Color.BLACK);
         text.setFont(new Font("", 30));
@@ -123,27 +123,27 @@ public class Tick {
 
         Switch.main();
 
-        gc.setFill(Color.BLACK);
-        gc.fillOval(Food.foodX * Game.cornersize, Food.foodY * Game.cornersize, Game.cornersize, Game.cornersize);
-        gc.setFill(cc);
-        gc.fillOval((Food.foodX * Game.cornersize)+1, (Food.foodY * Game.cornersize)+1, Game.cornersize-2, Game.cornersize-2);
+        field.setFill(Color.BLACK);
+        field.fillOval(Food.foodX * Game.blocksize, Food.foodY * Game.blocksize, Game.blocksize, Game.blocksize);
+        field.setFill(cc);
+        field.fillOval((Food.foodX * Game.blocksize)+1, (Food.foodY * Game.blocksize)+1, Game.blocksize-2, Game.blocksize-2);
 
-        gc.setFill(Color.BLACK);
-        gc.fillOval(Food.foodX2 * Game.cornersize, Food.foodY2 * Game.cornersize, Game.cornersize, Game.cornersize);
-        gc.setFill(cc2);
-        gc.fillOval((Food.foodX2 * Game.cornersize)+1, (Food.foodY2 * Game.cornersize)+1, Game.cornersize-2, Game.cornersize-2);
+        field.setFill(Color.BLACK);
+        field.fillOval(Food.foodX2 * Game.blocksize, Food.foodY2 * Game.blocksize, Game.blocksize, Game.blocksize);
+        field.setFill(cc2);
+        field.fillOval((Food.foodX2 * Game.blocksize)+1, (Food.foodY2 * Game.blocksize)+1, Game.blocksize-2, Game.blocksize-2);
 
         for (int i = 0; i < Game.snake.size(); i++) {
-            gc.setFill(Color.BLACK);
+            field.setFill(Color.BLACK);
             if (i==0){
-                gc.fillRoundRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize, Game.cornersize,10,10);
-                gc.setFill(Color.DARKGREEN);
-                gc.fillRoundRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize - 1, Game.cornersize - 1,10,10);
+                field.fillRoundRect(Game.snake.get(i).x * Game.blocksize, Game.snake.get(i).y * Game.blocksize, Game.blocksize, Game.blocksize,10,10);
+                field.setFill(Color.DARKGREEN);
+                field.fillRoundRect(Game.snake.get(i).x * Game.blocksize, Game.snake.get(i).y * Game.blocksize, Game.blocksize - 1, Game.blocksize - 1,10,10);
             }
             else {
-                gc.fillRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize, Game.cornersize);
-                gc.setFill(Color.GREEN);
-                gc.fillRect(Game.snake.get(i).x * Game.cornersize, Game.snake.get(i).y * Game.cornersize, Game.cornersize - 1, Game.cornersize - 1);
+                field.fillRect(Game.snake.get(i).x * Game.blocksize, Game.snake.get(i).y * Game.blocksize, Game.blocksize, Game.blocksize);
+                field.setFill(Color.GREEN);
+                field.fillRect(Game.snake.get(i).x * Game.blocksize, Game.snake.get(i).y * Game.blocksize, Game.blocksize - 1, Game.blocksize - 1);
             }
         }
     }
