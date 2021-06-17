@@ -66,16 +66,16 @@ public class Game extends Application {
             scene2.setFill(Color.LIGHTGRAY);
 
             scene2.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
-                if (key.getCode() == KeyCode.W || key.getCode() == KeyCode.UP && direction != Dir.down) {
+                if ((key.getCode() == KeyCode.W || key.getCode() == KeyCode.UP) && direction != Dir.down) {
                     direction = Dir.up;
                 }
-                if (key.getCode() == KeyCode.A || key.getCode() == KeyCode.LEFT && direction != Dir.right) {
+                if ((key.getCode() == KeyCode.A || key.getCode() == KeyCode.LEFT) && direction != Dir.right) {
                     direction = Dir.left;
                 }
-                if (key.getCode() == KeyCode.S || key.getCode() == KeyCode.DOWN && direction != Dir.up) {
+                if ((key.getCode() == KeyCode.S || key.getCode() == KeyCode.DOWN) && direction != Dir.up) {
                     direction = Dir.down;
                 }
-                if (key.getCode() == KeyCode.D || key.getCode() == KeyCode.RIGHT && direction != Dir.left) {
+                if ((key.getCode() == KeyCode.D || key.getCode() == KeyCode.RIGHT) && direction != Dir.left) {
                     direction = Dir.right;
                 }
                 if (key.getCode() == KeyCode.R) {
